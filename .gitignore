@@ -1,3 +1,8 @@
+#files
+.DS_Store
+
+
+#folders
 __pycache__/
 data/
 downloaded_models/
@@ -6,3 +11,4 @@ fullsize_data/
 mini_dataset/
 models/
 
+.ipynb_checkpoints/
