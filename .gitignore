@@ -1,0 +1,8 @@
+__pycache__/
+data/
+downloaded_models/
+fine_tuned_model/
+fullsize_data/
+mini_dataset/
+models/
+
