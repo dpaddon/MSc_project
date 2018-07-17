@@ -10,5 +10,8 @@ fine_tuned_model/
 fullsize_data/
 mini_dataset/
 models/
+saved_models/
+
 
 .ipynb_checkpoints/
+
