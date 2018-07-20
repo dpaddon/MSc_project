@@ -11,6 +11,7 @@ fullsize_data/
 mini_dataset/
 models/
 saved_models/
+cocoapi/
 
 
 .ipynb_checkpoints/
