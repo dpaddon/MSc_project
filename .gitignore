@@ -12,7 +12,7 @@ mini_dataset/
 models/
 saved_models/
 cocoapi/
-
+logs/
 
 .ipynb_checkpoints/
 
