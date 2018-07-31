@@ -6,6 +6,7 @@ import io
 import PIL.Image
 import matplotlib.pyplot as plt
 from random import shuffle
+import csv
 
 
 
@@ -149,7 +150,7 @@ def create_tf_example(path, frame_num):
 
 def main(_):
     
-    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.')]
+    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.') if not f.startswith('orig')]
     datasets = sorted(datasets)
     print("Datasets to be encoded as tf.records: ")
     print(datasets)
@@ -159,9 +160,10 @@ def main(_):
         dataset_path = os.path.join(abs_path, d_s)
         print(dataset_path)
         frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')]
-        print(frames)
+#        print(frames)
         shuffle(frames)
         num_frames = len(frames)
+        
         
         #train set
         train_num = int(num_frames * (1-val_size))
@@ -177,6 +179,7 @@ def main(_):
           
         writer.close()
         
+
         # eval set
         print("Forming eval tf.record shard of {} images".format(num_frames-train_num))
         val_frames = frames[train_num:]
@@ -188,6 +191,15 @@ def main(_):
             writer.write(tf_example.SerializeToString())
           
         writer.close()
+        
+
+        # Save a CSV with the filenames of the training and validation frames
+        split_csv = os.path.join(OUTPUT_PATH, '{}_splits.csv'.format(d_s))
+        with open(split_csv, 'w') as trainfile:
+            wr = csv.writer(trainfile, quoting=csv.QUOTE_ALL)
+            wr.writerow(sorted(train_frames))
+            wr.writerow(sorted(val_frames))
+
 
 if __name__ == '__main__':
   tf.app.run()

@@ -30,7 +30,7 @@ ANNS_DIR = os.path.join(DATA_DIR, 'annotations_july')
 
 
 # get list of file names
-fNames = sorted([f for f in os.listdir(ANNS_DIR) if not f.startswith('.')])
+fNames = sorted([f for f in os.listdir(ANNS_DIR) if not f.startswith('.') if not f.endswith('212337')]) #exclude the worst annotation folder
 print("Filenames: ")
 print("\n".join(fNames))
 print("")
@@ -60,7 +60,7 @@ for filename in fNames:
     
     # Load every 70th frame
     for frame_number in range(num_frames)[1::70]:
-    
+        print(frame_number)
 
         # read image (full or masked)
         img_field = '/mask'

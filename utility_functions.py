@@ -74,7 +74,7 @@ def masks_from_XML(annotation_path, img, full_masks=True):
     
         # Check if the worms have been annotated HT-HT or HT-TH, and arrange 
         # the lists accordingly
-        if (abs(cnt1[-1][0] - cnt2[0][0]) < 10) and (abs(cnt1[-1][1] - cnt2[0][1]) < 10):
+        if (abs(int(cnt1[-1][0]) - int(cnt2[0][0])) < 10) and (abs(int(cnt1[-1][1]) - int(cnt2[0][1])) < 10):
             cnt_close = np.vstack([cnt1, cnt2])
         else:
             cnt_close = np.vstack([cnt1, cnt2[-1::-1]])
