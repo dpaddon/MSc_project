@@ -14,7 +14,10 @@ import numpy as np
 import xml.etree.ElementTree as ET
 from copy import copy
 
-
+def load_image_into_numpy_array(image):
+  (im_width, im_height) = image.size
+  return np.array(image.getdata()).reshape(
+      (im_height, im_width, 3)).astype(np.uint8)[:,:,:3]
 
 def masks_from_XML(annotation_path, img, full_masks=True):
     '''

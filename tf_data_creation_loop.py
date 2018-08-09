@@ -15,8 +15,8 @@ from tensorflow.models.research.object_detection.utils import dataset_util
 
 CWD = os.getcwd()
 
-#abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
-abs_path = '/Users/daniel/Documents/UCL/Project/Data/BBBC/'
+abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
+#abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
 OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_tf_records'
 
 flags = tf.app.flags
@@ -151,7 +151,7 @@ def create_tf_example(path, frame_num):
 
 def main(_):
     
-    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.') if f == 'BBBC_CURATED']
+    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.') if f == 'synthesised_data']
     datasets = sorted(datasets)
     print("Datasets to be encoded as tf.records: ")
     print(datasets)
