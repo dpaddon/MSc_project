@@ -24,7 +24,7 @@ DATA_DIR = '/Users/daniel/Documents/UCL/Project/Data/'
 
 
 # get list of file names
-dirNames = sorted([f for f in os.listdir(DATA_DIR) if f.startswith('synth')])
+dirNames = sorted([f for f in os.listdir(DATA_DIR) if f == 'synthesised_poisson_data'])
 print("Filenames: ")
 print("\n".join(dirNames))
 print("")
@@ -42,7 +42,7 @@ for directory in dirNames:
     print(CROPPED_OUTPUT_DIR)
     
     FNAMES = [f for f in os.listdir(IMAGES_DIR) if not f.startswith('.')]
-    FNAMES = sorted(FNAMES, key=int)
+    FNAMES = sorted(FNAMES, key=int)[:300]
      
 
     for fname in FNAMES:

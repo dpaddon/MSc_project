@@ -151,7 +151,7 @@ def create_tf_example(path, frame_num):
 
 def main(_):
     
-    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.') if f == 'synthesised_data']
+    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.') if f == 'synthesised_poisson_data']
     datasets = sorted(datasets)
     print("Datasets to be encoded as tf.records: ")
     print(datasets)
