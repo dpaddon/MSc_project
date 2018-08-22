@@ -15,9 +15,9 @@ from tensorflow.models.research.object_detection.utils import dataset_util
 
 CWD = os.getcwd()
 
-abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
+abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
 #abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
-OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_tf_records'
+OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/fullsize_tf_record'
 
 flags = tf.app.flags
 flags.DEFINE_string('output_path', OUTPUT_PATH, 'Path to output TFRecords')
@@ -160,7 +160,7 @@ def main(_):
         
         dataset_path = os.path.join(abs_path, d_s)
         print(dataset_path)
-        frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')]
+        frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')][:250]
 #        print(frames)
         shuffle(frames)
         num_frames = len(frames)
