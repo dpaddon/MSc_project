@@ -15,9 +15,9 @@ from tensorflow.models.research.object_detection.utils import dataset_util
 
 CWD = os.getcwd()
 
-abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
+abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
 #abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
-OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/fullsize_tf_record'
+OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/cropped_tf_record'
 
 flags = tf.app.flags
 flags.DEFINE_string('output_path', OUTPUT_PATH, 'Path to output TFRecords')
@@ -151,7 +151,7 @@ def create_tf_example(path, frame_num):
 
 def main(_):
     
-    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.') if f == 'synthesised_poisson_data']
+    datasets = [f for f in os.listdir(abs_path) if not f.startswith('.')]
     datasets = sorted(datasets)
     print("Datasets to be encoded as tf.records: ")
     print(datasets)
@@ -162,7 +162,12 @@ def main(_):
         print(dataset_path)
         frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')][:250]
 #        print(frames)
-        shuffle(frames)
+        
+        # Commented out shuffling for tracking - tracking requires sequential frames, 
+        # so the frames are kept in order so that the validation set is one contiguous block
+        # the frames within each record are shuffled by TF during training anyway
+        
+#        shuffle(frames)
         num_frames = len(frames)
         
         
