@@ -8,7 +8,7 @@ Created on Wed Jul 11 15:47:53 2018
 
 import os
 
-xml_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/annotations_july/N2_worms10_CSCD068947_10_Set2_Pos5_Ch1_08082017_212337/'
+xml_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/annotations_august/VC2010_worms10_food1-10_Set1_Pos4_Ch6_20122017_150107/'
 
 
 files = [f for f in os.listdir(xml_path) if not f.startswith('.')]
