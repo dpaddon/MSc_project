@@ -17,13 +17,13 @@ CWD = os.getcwd()
 
 abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
 #abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
-OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/cropped_tf_record'
+OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_tf_records'
 
 flags = tf.app.flags
 flags.DEFINE_string('output_path', OUTPUT_PATH, 'Path to output TFRecords')
 FLAGS = flags.FLAGS
 
-val_size = 0.2
+#val_size = 0.2
 
 
 def create_tf_example(path, frame_num):
@@ -156,55 +156,71 @@ def main(_):
     print("Datasets to be encoded as tf.records: ")
     print(datasets)
     
+    train_list = ["CB4856_worms10_food1-10_Set1_Pos4_Ch2_20102017_125044",  
+              "N2_worms10_food1-10_Set1_Pos4_Ch5_20102017_125024", 
+              "VC2010_worms10_food1-10_Set1_Pos4_Ch6_20122017_150107", 
+              "CX11271_worms10_food1-10_Set1_Pos4_Ch4_19052017_113042", 
+              "ED3049_worms10_food1-10_Set6_Pos5_Ch4_19052017_151021",
+              "JU360_worms10_food1-10_Set6_Pos5_Ch6_19052017_151012",
+              "N2_worms10_CSCD068947_1_Set1_Pos4_Ch4_08082017_210418",
+             "JU2587_worms10_food1-10_Set1_Pos4_Ch1_20102017_125044",
+             "NIC199_worms10_food1-10_Set7_Pos4_Ch4_19052017_153012"]
+    val_list = ["JU2234_worms10_food1-10_Set1_Pos4_Ch3_20102017_125033",
+              "JU2578_worms10_food1-10_Set1_Pos4_Ch4_20102017_125033",
+              "N2_worms10_CSCD068947_10_Set2_Pos5_Ch1_08082017_212337"]
+    
+    
+    
     for d_s in datasets:
         
         dataset_path = os.path.join(abs_path, d_s)
         print(dataset_path)
-        frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')][:250]
+        frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')]
 #        print(frames)
         
-        # Commented out shuffling for tracking - tracking requires sequential frames, 
-        # so the frames are kept in order so that the validation set is one contiguous block
-        # the frames within each record are shuffled by TF during training anyway
         
-#        shuffle(frames)
+        shuffle(frames)
         num_frames = len(frames)
         
         
         #train set
-        train_num = int(num_frames * (1-val_size))
-        print("Forming train tf.record shard of {} images".format(train_num))
+        if d_s in train_list:
+    #        train_num = int(num_frames * (1-val_size))
+            print("Forming train tf.record shard of {} images".format(num_frames))
+            
+            train_frames = frames#[:train_num]
+            writer = tf.python_io.TFRecordWriter(FLAGS.output_path + '/train/train_{}.record'.format(d_s))
+    
+            for frame_num in train_frames:
+    #            print(frame_num)
+                tf_example = create_tf_example(abs_path + '/' + d_s, frame_num)
+                writer.write(tf_example.SerializeToString())
+              
+            writer.close()
         
-        train_frames = frames[:train_num]
-        writer = tf.python_io.TFRecordWriter(FLAGS.output_path + '/train/train_{}.record'.format(d_s))
-
-        for frame_num in train_frames:
-#            print(frame_num)
-            tf_example = create_tf_example(abs_path + '/' + d_s, frame_num)
-            writer.write(tf_example.SerializeToString())
-          
-        writer.close()
+        elif d_s in val_list:
+            # eval set
+            print("Forming val tf.record shard of {} images".format(num_frames))
+            val_frames = frames#[train_num:]
+            writer = tf.python_io.TFRecordWriter(FLAGS.output_path + '/val/val_{}.record'.format(d_s))
+    
+            for frame_num in val_frames:
+    #            print(frame_num)
+                tf_example = create_tf_example(abs_path + '/' + d_s, frame_num)
+                writer.write(tf_example.SerializeToString())
+              
+            writer.close()
+            
+        else:
+            print("dataset {} not in train or val list!".format(d_s))
         
 
-        # eval set
-        print("Forming eval tf.record shard of {} images".format(num_frames-train_num))
-        val_frames = frames[train_num:]
-        writer = tf.python_io.TFRecordWriter(FLAGS.output_path + '/eval/eval_{}.record'.format(d_s))
-
-        for frame_num in val_frames:
-#            print(frame_num)
-            tf_example = create_tf_example(abs_path + '/' + d_s, frame_num)
-            writer.write(tf_example.SerializeToString())
-          
-        writer.close()
-        
-
-        # Save a CSV with the filenames of the training and validation frames
-        split_csv = os.path.join(OUTPUT_PATH, '{}_splits.csv'.format(d_s))
-        with open(split_csv, 'w') as trainfile:
-            wr = csv.writer(trainfile, quoting=csv.QUOTE_ALL)
-            wr.writerow(sorted(train_frames))
-            wr.writerow(sorted(val_frames))
+#        # Save a CSV with the filenames of the training and validation frames
+#        split_csv = os.path.join(OUTPUT_PATH, '{}_splits.csv'.format(d_s))
+#        with open(split_csv, 'w') as trainfile:
+#            wr = csv.writer(trainfile, quoting=csv.QUOTE_ALL)
+#            wr.writerow(sorted(train_frames))
+#            wr.writerow(sorted(val_frames))
 
 
 if __name__ == '__main__':
