@@ -29,6 +29,10 @@ ANNS_DIR = os.path.join(DATA_DIR, 'annotations_final')
 #OUTPUT_DIR = os.path.join(DATA_DIR, 'collated_dataset')
 
 
+# decide whether to also save XML annotations
+# Set this to False to save images for benchmark testing
+use_xmls = False
+
 
 ###############################################################
 # Define the frames to ignore due to poor quality hand annotations
@@ -92,8 +96,7 @@ for (fn, li) in zip(exclude_file_names, exclude_lists):
 
 # get list of file names
 # fNames = sorted([f for f in os.listdir(ANNS_DIR) if not f.startswith('.') if not f.endswith('212337')]) #exclude the worst annotation folder
-#fNames = sorted(exclude_file_names)
-fNames = ["NIC199_worms10_food1-10_Set7_Pos4_Ch4_19052017_153012"]
+fNames = sorted(exclude_file_names)
 print("Filenames: ")
 print("\n".join(fNames))
 print("")
@@ -112,6 +115,8 @@ for filename in fNames:
 
     CROPPED_OUTPUT_DIR = os.path.join(DATA_DIR, 'cropped_collated_dataset', filename)
     FULLSIZE_OUTPUT_DIR = os.path.join(DATA_DIR, 'fullsize_collated_dataset', filename)
+    
+    
 
     # load images file
     with pd.HDFStore(features_file, 'r') as fid:
@@ -200,13 +205,14 @@ for filename in fNames:
             # note we have to transpose this mask (matlab vs numpy matrix indexing)
             masks.append(copy(mask.T))
             
-                
-        # load xml annotations (if they exist for this frame)
-        # and append them to the list of masks
-        annotation_path = os.path.join(XML_DIR, str(frame_number) + ".xml")
-        if os.path.exists(annotation_path):
-            xml_masks, xml_heads = masks_from_XML(annotation_path, img)
-            masks.extend(copy(xml_masks))
+        
+        if use_xmls:
+            # load xml annotations (if they exist for this frame)
+            # and append them to the list of masks
+            annotation_path = os.path.join(XML_DIR, str(frame_number) + ".xml")
+            if os.path.exists(annotation_path):
+                xml_masks, xml_heads = masks_from_XML(annotation_path, img)
+                masks.extend(copy(xml_masks))
             
  
         # Save fullsize images and masks
