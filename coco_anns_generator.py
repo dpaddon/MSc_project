@@ -97,8 +97,11 @@ def main():
                 annotation_info = pycococreatortools.create_annotation_info(
                     segmentation_id, image_id, category_info, binary_mask,
                     image.size, tolerance=2)
+                
     
                 if annotation_info is not None:
+                    #add score for COCO evaluation
+                    annotation_info['score'] = 1.0
                     coco_output["annotations"].append(annotation_info)
     
                 segmentation_id = segmentation_id + 1
