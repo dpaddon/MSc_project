@@ -113,8 +113,8 @@ for filename in fNames:
     features_file = os.path.join(FEATURES_DIR, filename + "_featuresN.hdf5")
     XML_DIR = os.path.join(ANNS_DIR, filename)
 
-    CROPPED_OUTPUT_DIR = os.path.join(DATA_DIR, 'cropped_collated_dataset', filename)
-    FULLSIZE_OUTPUT_DIR = os.path.join(DATA_DIR, 'fullsize_collated_dataset', filename)
+    CROPPED_OUTPUT_DIR = os.path.join(DATA_DIR, 'cropped_tierpsy_outputs', filename)
+    FULLSIZE_OUTPUT_DIR = os.path.join(DATA_DIR, 'fullsize_tierpsy_outputs', filename)
     
     
 

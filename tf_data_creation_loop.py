@@ -175,11 +175,11 @@ def main(_):
         
         dataset_path = os.path.join(abs_path, d_s)
         print(dataset_path)
-        frames = [f for f in os.listdir(dataset_path) if not f.startswith('.')]
+        frames = sorted([f for f in os.listdir(dataset_path) if not f.startswith('.')], key=int)
 #        print(frames)
         
         
-        shuffle(frames)
+#        shuffle(frames)
         num_frames = len(frames)
         
         
