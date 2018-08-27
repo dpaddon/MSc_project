@@ -15,7 +15,7 @@ from pycococreatortools import pycococreatortools
 #MODE = "ground_truth"
 MODE = "tierpsy_evaluation"
 
-ROOT_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_tierpsy_outputs'
+ROOT_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
 
 
 OUTPUTS_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/COCO_outputs'
@@ -24,7 +24,7 @@ OUTPUTS_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/COCO_out
 
 def main():
     
-    datasets = [f for f in os.listdir(ROOT_DIR) if not f.startswith('.')]
+    datasets = [f for f in os.listdir(ROOT_DIR) if not f.startswith('.') if not f.startswith('syn')]
     datasets = sorted(datasets)
     print("Datasets to be encoded as COCO JSON files: ")
     print(datasets)
@@ -66,7 +66,7 @@ def main():
             "annotations": []
         }
     
-        image_id = 1
+#        image_id = 1
         segmentation_id = 1
         
         
@@ -75,6 +75,7 @@ def main():
     
         # go through each image
         for fname in filenames:
+            image_id = fname
             image = Image.open(os.path.join(IMAGE_DIR, fname, 'image/image_{}.png'.format(fname)))
             image_info = pycococreatortools.create_image_info(
                 image_id, fname, image.size)
@@ -104,9 +105,9 @@ def main():
                     annotation_info['score'] = 1.0
                     coco_output["annotations"].append(annotation_info)
     
-                segmentation_id = segmentation_id + 1
+                    segmentation_id = segmentation_id + 1
     
-            image_id = image_id + 1
+#            image_id = image_id + 1
     
         os.makedirs(os.path.join(OUTPUTS_DIR, MODE), exist_ok=True)
         with open('{}/{}/{}.json'.format(OUTPUTS_DIR, MODE, DATASET), 'w') as output_json_file:
