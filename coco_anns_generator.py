@@ -15,17 +15,15 @@ from pycococreatortools import pycococreatortools
 #MODE = "ground_truth"
 MODE = "tierpsy_evaluation"
 
-ROOT_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
+ROOT_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_annotations_only_dataset_tierpsy'
 
 
-OUTPUTS_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/COCO_outputs'
-
+OUTPUTS_DIR = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/COCO_outputs_anns_only'
 
 
 def main():
     
     datasets = [f for f in os.listdir(ROOT_DIR) if not f.startswith('.') if not f.startswith('syn')]
-    datasets = sorted(datasets)
     print("Datasets to be encoded as COCO JSON files: ")
     print(datasets)
     
@@ -72,7 +70,9 @@ def main():
         
         #Get list of frame IDs
         filenames = sorted([f for f in os.listdir(IMAGE_DIR) if not f.startswith('.')], key=int)
-    
+            
+#        print(filenames)
+        
         # go through each image
         for fname in filenames:
             image_id = fname

@@ -15,15 +15,20 @@ from tensorflow.models.research.object_detection.utils import dataset_util
 
 CWD = os.getcwd()
 
-abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_collated_dataset'
+abs_path = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_annotations_only_dataset'
 #abs_path = '/Users/daniel/Documents/UCL/Project/Data/'
-OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_tf_records'
+OUTPUT_PATH = '/Users/daniel/Documents/UCL/Project/Data/annotation-data/cropped_tf_records_anns_only'
 
 flags = tf.app.flags
 flags.DEFINE_string('output_path', OUTPUT_PATH, 'Path to output TFRecords')
 FLAGS = flags.FLAGS
 
 #val_size = 0.2
+
+filename_list = ["JU2587_worms10_food1-10_Set1_Pos4_Ch1_20102017_125044", 
+                 "N2_worms10_CSCD068947_1_Set1_Pos4_Ch4_08082017_210418",
+                 "N2_worms10_CSCD068947_10_Set2_Pos5_Ch1_08082017_212337",
+                 "NIC199_worms10_food1-10_Set7_Pos4_Ch4_19052017_153012"]
 
 
 def create_tf_example(path, frame_num):
@@ -152,7 +157,7 @@ def create_tf_example(path, frame_num):
 def main(_):
     
     datasets = [f for f in os.listdir(abs_path) if not f.startswith('.')]
-    datasets = sorted(datasets)
+#    datasets = sorted(filename_list)
     print("Datasets to be encoded as tf.records: ")
     print(datasets)
     

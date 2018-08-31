@@ -95,3 +95,6 @@ def masks_from_XML(annotation_path, img, full_masks=True):
         masks.append(copy(mask))
         
     return (masks, heads)
+
+
+

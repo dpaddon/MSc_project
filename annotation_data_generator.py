@@ -92,6 +92,19 @@ for (fn, li) in zip(exclude_file_names, exclude_lists):
     exclude_dict[fn] = sorted(list(set(li)), key=int)
 ###############################################################
 
+corrections_filename_list = ["JU2587_worms10_food1-10_Set1_Pos4_Ch1_20102017_125044", 
+                 "N2_worms10_CSCD068947_1_Set1_Pos4_Ch4_08082017_210418",
+                 "N2_worms10_CSCD068947_10_Set2_Pos5_Ch1_08082017_212337",
+                 "NIC199_worms10_food1-10_Set7_Pos4_Ch4_19052017_153012"]
+
+###############################################################
+anns_dict = {}
+for fName in exclude_file_names:
+    ANNS_DICT_DIR = os.path.join(ANNS_DIR, fName)
+    anns_list = [int(f[:-4]) for f in os.listdir(ANNS_DICT_DIR) if f.endswith('xml')]
+    anns_dict[fName] = sorted(list(set(anns_list) - set(exclude_dict[fName])), key=int)
+     
+###############################################################
 
 
 # get list of file names
@@ -113,8 +126,8 @@ for filename in fNames:
     features_file = os.path.join(FEATURES_DIR, filename + "_featuresN.hdf5")
     XML_DIR = os.path.join(ANNS_DIR, filename)
 
-    CROPPED_OUTPUT_DIR = os.path.join(DATA_DIR, 'cropped_tierpsy_outputs', filename)
-    FULLSIZE_OUTPUT_DIR = os.path.join(DATA_DIR, 'fullsize_tierpsy_outputs', filename)
+    CROPPED_OUTPUT_DIR = os.path.join(DATA_DIR, 'cropped_annotations_only_dataset_tierpsy', filename)
+    FULLSIZE_OUTPUT_DIR = os.path.join(DATA_DIR, 'fullsize_annotations_only_dataset_tierpsy', filename)
     
     
 
@@ -127,13 +140,16 @@ for filename in fNames:
     num_frames = trajectories_data['frame_number'].max()
     
     # Load every 70th frame
-    for frame_number in range(num_frames)[1::70]:
+#    for frame_number in range(num_frames)[1::70]:
+        
+    #only process the annotations which weren't excluded
+    for frame_number in anns_dict[filename]:
         
         #############
-        # Ignore frames in the exlcude list
-        if frame_number in exclude_dict[filename]:
-            continue
-        #############
+#        # Ignore frames in the exlcude list
+#        if frame_number in exclude_dict[filename]:
+#            continue
+#        #############
         
         print(frame_number)
 
