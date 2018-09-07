@@ -25,4 +25,17 @@ The TensorFlow models used for training take data in the tf record file format. 
 Models can be trained on a list of shards, specified from within the config file. 
 
 
+### Training
+Full instructions for training can be found at https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md
+
+It is recommended to perform fine-tune training from a model pre-trained on COCO as full training can take up to 2 weeks. Pre-trained checkpoints can be found at https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md 
+
+### Evaluation
+The object detection API includes an evaluation script (eval.py, replicated in this repository) which can be used to evaluated the trained model against the COCO evaluation metrics of mAP and mAR.
+
+### Inference
+Once the model has been trained, the graph can be exported for inference.
+
+The exported inference graph can be used in either the inference.py script, or inference_nb.ipynb Python Notebook.
+
 
