@@ -1,3 +1,11 @@
+########################################################################################
+
+# Originally adapted from the example inference notebook at 
+# https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
+
+########################################################################################
+
+
 import numpy as np
 import os
 import six.moves.urllib as urllib

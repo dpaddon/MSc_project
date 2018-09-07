@@ -7,6 +7,9 @@ Created on Tue Jul 10 21:16:10 2018
 
 Utility functions for creating the worms dataset
 and training the tf mask-RCNN model
+
+#image loading and inference functions from https://github.com/tensorflow/models/tree/master/research/object_detection
+
 """
 
 import cv2

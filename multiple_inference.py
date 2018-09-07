@@ -1,3 +1,16 @@
+########################################################################################
+
+# Originally adapted from the example inference notebook at 
+# https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
+
+# This is a slightly optimised version of inference.py, used for calculating inference speeds
+# This version avoids re-loading the tf graph for every image
+
+########################################################################################
+
+
+
+
 import numpy as np
 import os
 import six.moves.urllib as urllib
@@ -36,7 +49,7 @@ from utility_functions import load_image_into_numpy_array
 
 
 # Load inference graph from checkpoint
-MODEL_NAME = 'resnet_101_atrous/fine_tuned_model_100k_final_sets'
+MODEL_NAME = 'inception_resnet/fine_tuned_model_100k_final_sets'
 PATH_TO_CKPT = os.path.join('./downloaded_models', MODEL_NAME, 'frozen_inference_graph.pb')
 
 detection_graph = tf.Graph()
