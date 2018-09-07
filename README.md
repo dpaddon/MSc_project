@@ -38,4 +38,8 @@ Once the model has been trained, the graph can be exported for inference.
 
 The exported inference graph can be used in either the inference.py script, or inference_nb.ipynb Python Notebook.
 
+The results should look something like this:
+
+![inference results](url-to-image)
+
 
