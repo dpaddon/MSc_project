@@ -40,6 +40,6 @@ The exported inference graph can be used in either the inference.py script, or i
 
 The results should look something like this:
 
-![inference results](url-to-image)
+![inference results](https://github.com/dpaddon/MSc_project/blob/master/images/911.png)
 
 
